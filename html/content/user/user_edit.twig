@@ -1,0 +1,31 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <div class="row">
+            <div class="col-12">
+                <h4>{{ get_Translation('Users', 'usersEditTitle') }}</h4>
+
+                <div class="card">
+                    <div class="card-body">
+                        {% include 'content/user/user_form.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End PAge Content -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var success = '{{ get_Translation('System', 'success') }}';
+        var successEdit = '{{get_Translation('System', 'successEdit')  }}';
+        var script = '{{ path_for('user.ajax.edit', {'id': user.id}) }}';
+        var user_id = '{{ user.id }}';
+    </script>
+    <script type="text/javascript" src="{{ base_url() }}/js/user/user_edit.js"></script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <div class="row">
+            <div class="col-12">
+                <h4>{{ get_Translation('Users', 'usersListTitle') }}</h4>
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <table id="user_list" cellspacing="0" width="100%"
+                                       class="table table-striped table-bordered dataTable display responsive no-warp">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ get_Translation('Users', 'username') }}</th>
+                                        <th>{{ get_Translation('Users', 'names') }}</th>
+                                        <th>{{ get_Translation('Users', 'email') }}</th>
+                                        <th>{{ get_Translation('Users', 'phone') }}</th>
+                                        <th>{{ get_Translation('Users', 'userType') }}</th>
+                                        <th class="none">{{ get_Translation('System', 'DateCreate') }}</th>
+                                        <th>{{ get_Translation('Users', 'userStatus') }}</th>
+                                        <th class="all">&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Content -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var script = "{{ path_for('user.ajax.list') }}";
+    </script>
+    <script type="text/javascript" src="{{ base_url() }}/js/user/user_list.js"></script>
+{% endblock %}

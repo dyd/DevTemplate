@@ -1,0 +1,37 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <div class="row">
+            <div class="col-12">
+                <h4>{{ get_Translation('Users', 'usersAddTitle') }}</h4>
+                <div class="card">
+                    <div class="card-body">
+                        {% include 'content/user/user_form.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End PAge Content -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var script = '{{ path_for('user.add') }}';
+        var fieldErrorModules1 = '{{ get_Translation('Users', 'fieldErrorModules1') }}';
+        var fieldErrorModules2 = '{{ get_Translation('Users', 'fieldErrorModules2') }}';
+        var fieldErrorType1 = '{{ get_Translation('Users', 'fieldErrorType1') }}';
+        var fieldErrorType2 = '{{ get_Translation('Users', 'fieldErrorType2') }}';
+        var fieldErrorEmail1 = '{{ get_Translation('Users', 'fieldErrorEmail1') }}';
+        var fieldErrorEmail2 = '{{ get_Translation('Users', 'fieldErrorEmail2') }}';
+        var fieldErrorLanguage1 = '{{ get_Translation('Users', 'fieldErrorLanguage1') }}';
+        var fieldErrorLanguage2 = '{{ get_Translation('Users', 'fieldErrorLanguage2') }}';
+        var successAdd = '{{ get_Translation('System', 'successAdd') }}';
+        var success = '{{ get_Translation('System', 'success') }}';
+    </script>
+
+    <script type="text/javascript" src="{{ base_url() }}/js/user/user_add.js"></script>
+{% endblock %}

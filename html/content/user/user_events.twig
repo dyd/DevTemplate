@@ -1,0 +1,47 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <!-- Container fluid  -->
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <div class="row">
+            <div class="col-12">
+                <h4>{{ get_Translation('Users', 'activeNow') }}</h4>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div id="activeUsers">
+                            <div style="height:22px">&nbsp;</div>
+                                <table id="product-table" cellspacing="0" cellpadding="0" width="100%" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <span>{{ get_Translation('Users', 'names') }}</span>
+                                        </th>
+                                        <th>
+                                            <span>{{ get_Translation('Users', 'duration') }}</span>
+                                        </th>
+                                        <th>
+                                            <span>{{ get_Translation('Users', 'remoteAddrTitle') }}</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Content -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var script = "{{ path_for('users.events') }}";
+    </script>
+    <script type="text/javascript" src="{{ base_url() }}/js/user/user_events.js"></script>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <div class="row">
+            <div class="col-12">
+                <h4>{{ get_Translation('Translations', 'translationsList') }}</h4>
+
+                <div class="card">
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="watchers"
+                                   class="table table-striped table-bordered dataTable display responsive no-warp"
+                                   cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <tr>
+                                    <th class="all">{{ get_Translation('Translations', 'translationsLanguage') }}</th>
+                                    <th class="all">{{ get_Translation('Translations', 'translationsCode') }}</th>
+                                    <th class="all">&nbsp;</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var script = "{{ path_for('languages') }}";
+        var deleteScript = "{{ path_for('language.delete') }}";
+        var success = "{{ get_Translation('System', 'success') }}";
+        var successDel = "{{ get_Translation('System', 'successDel') }}";
+    </script>
+    <script type="text/javascript" src="{{ base_url() }}/js/language/language_list.js"></script>
+{% endblock %}

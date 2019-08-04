@@ -1,0 +1,222 @@
+<form id="usr_frm">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                {% if(user is defined) %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}"/>
+                {% endif %}
+                <input {{ user is defined ? 'value=' ~ user.login_name ~ ' disabled=disabled' : '' }}
+                        required class="form-control"
+                        name="loginName" id="loginName"
+                        type="text"
+                        placeholder="{{ get_Translation('Users', 'username') }}"
+                        data-toggle="popover"
+                        data-html="true"
+                        data-trigger="manual"
+                        data-placement="bottom"
+                        data-content='{{ get_Translation('System', 'allowedSymbols') }}: {{ get_Translation('System', 'allowedSymbolsChars') }}
+                <button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>
+                '>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <input {{ (user is defined and user.is_pass_expire) ? 'checked' : '' }}
+                        type="checkbox"
+                        name="is_pass_expire"
+                        id="is_pass_expire">
+                <label for="is_pass_expire">{{ get_Translation('Users', 'expiredPass') }}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <input value="{{ user is defined ? user.first_name : '' }}"
+                       required
+                       class="form-control"
+                       name="firstname"
+                       id="firstname"
+                       type="text"
+                       placeholder="{{ get_Translation('Users', 'firstname') }}"
+                       data-toggle="popover"
+                       data-html="true"
+                       data-trigger="manual"
+                       data-placement="bottom"
+                       data-content='{{ get_Translation('System', 'allowedSymbols') }}: {{ get_Translation('System', 'allowedSymbolsChars') }}
+                <button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>
+                '>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <input value="{{ user is defined ? user.last_name : '' }}"
+                       required
+                       class="form-control"
+                       name="lastname"
+                       type="text" id="lastname"
+                       placeholder="{{ get_Translation('Users', 'lastname') }}"
+                       data-toggle="popover"
+                       data-html="true"
+                       data-trigger="manual"
+                       data-placement="bottom"
+                       data-content='{{ get_Translation('System', 'allowedSymbols') }}: {{ get_Translation('System', 'allowedSymbolsChars') }}
+                <button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>
+                '>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="input-group">
+                <span class="input-group-addon" id="email_addon">@</span>
+                <input value="{{ user is defined ? user.email : '' }}"
+                       required class="form-control"
+                       type="email" name="e-mail"
+                       id="e-mail"
+                       placeholder="{{ get_Translation('Users', 'email') }}"
+                       aria-describedby="email_addon"
+                       data-toggle="popover"
+                       data-html="true"
+                       data-trigger="manual"
+                       data-placement="bottom"
+                       data-content='{{ get_Translation('System', 'allowedSymbols') }}: {{ get_Translation('System', 'allowedSymbolsChars') }},@,.
+                <button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>
+                '>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <input value="{{ user is defined ? user.msisdn : '' }}"
+                       required class="form-control"
+                       type="text" name="phone"
+                       id="phone" placeholder="{{ get_Translation('Users', 'phone') }}"
+                       aria-describedby="phone_addon"
+                       data-toggle="popover"
+                       data-html="true"
+                       data-trigger="manual"
+                       data-placement="bottom"
+                       data-content='{{ get_Translation('System', 'allowedSymbols') }}: {{ get_Translation('System', 'allowedSymbolsNumbers') }}
+                       <button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>'>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+					<textarea
+                            style="resize:none;height: 80px;" name="allowed_ip" class="form-control" rows="4"
+                            placeholder="{{ get_Translation('Users', 'remoteAddr') }}"
+                            data-toggle="popover" data-html="true" data-trigger="manual" data-placement="bottom"
+                            data-content='{{ get_Translation('Users', 'remoteAddrToolTip') }}
+                <button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>
+                '>{{ user and user.remote_addr ? user.remote_addr | join(',') }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    {% if (action is defined and action == 'edit') %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>{{ get_Translation('Users', 'userStatus') }}</label>
+                    <br>
+                    <input data-on-text="{{ get_Translation('Users', 'userStatusActive') }}"
+                           data-off-text="{{ get_Translation('Users', 'userStatusNotActive') }}"
+                           title="{{ get_Translation('Users', 'userStatus') }}"
+                           type="checkbox"
+                           name="status" {% if (user is defined) %}
+                        {{ user.status == constant('USER_STATUS_ACTIVE') ? 'checked=checked' }}
+                    {% else %}
+                        {{ 'checked=checked' }}
+                    {% endif %}>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="rights_select">{{ get_Translation('Users', 'userType') }}</label>
+                <select name="rights" id="rights_select" class="selectpicker">
+                    <option {{ user is defined and user.rights == constant('USER_RIGHT_ADMINISTRATOR') ? 'selected=selected' : '' }}
+                            value="{{ constant('USER_RIGHT_ADMINISTRATOR') }}">{{ get_Translation('Users', 'userTypeAdmin') }}
+                    </option>
+                    <option {{ user is defined and user.rights == constant('USER_RIGHT_CRUD') ? 'selected=selected' : '' }}
+                            value="{{ constant('USER_RIGHT_CRUD') }}">{{ get_Translation('Users', 'userTypeCRUD') }}
+                    </option>
+                    <option {{ user is defined and user.rights == constant('USER_RIGHT_EDIT') ? 'selected=selected' : '' }}
+                            value="{{ constant('USER_RIGHT_EDIT') }}">{{ get_Translation('Users', 'userTypeEdit') }}
+                    </option>
+                    <option {{ user is defined and user.rights == constant('USER_RIGHT_VIEW') ? 'selected=selected' : '' }}
+                            value="{{ constant('USER_RIGHT_VIEW') }}">{{ get_Translation('Users', 'userTypeView') }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="modules">{{ get_Translation('Users', 'modules') }}</label>
+                <select name="modules" class="selectpicker" multiple
+                        title="{{ get_Translation('Users', 'chooseModules') }}">
+                    <option {% if user is defined %}
+                        {% for module in user.modules %}
+                            {{ module.names == 'users' ? 'selected=selected' }}
+                        {% endfor %}
+                    {% endif %} value="users">{{ get_Translation('Menu', 'user') }}</option>
+                    <option {% if user is defined %}
+                        {% for module in user.modules %}
+                            {{ module.names == 'translations' ? 'selected=selected' }}
+                        {% endfor %}
+                    {% endif %} value="translations">{{ get_Translation('Menu', 'language') }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language SELECT -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>{{ get_Translation('Users', 'defaultLang') }}</label>
+                <select name="default_language" class="selectpicker"
+                        title="{{ get_Translation('System', 'chooseLanguage') }}">
+                    {% for lang in language %}
+                        <option {{ user is defined and user.default_language == lang.id ? 'selected=selected' : '' }}
+                                value="{{ lang.id }}">{{ lang.language }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <button id="sbm_button" type="submit" role="submit" class="btn btn-success"
+                        data-loading-text="{{ get_Translation('System', 'pleaseWait') }}">
+                    <span class="fa fa-check-circle" aria-hidden="true"></span>
+                    {{ (action is defined and action == 'edit') ? get_Translation('System', 'save') : get_Translation('System', 'add') }}
+                </button>
+
+                {% if (action is defined and action == 'edit') %}
+                    <a class="btn btn-info" href="{{ path_for('user.page', {'id' : user.id}) }}">
+                        <span class="fa fa-times-circle" aria-hidden="true"></span>
+                        {{ get_Translation('System', 'cancel') }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</form>

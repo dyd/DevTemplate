@@ -1,0 +1,157 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <div class="container" style="margin-top:5px;">
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="card card-outline-info">
+                    <div class="m-b-0 card-header text-white">
+                        <span class="fa fa-stack fa-lg" aria-hidden="true">
+                            <i class="fa fa-circle-thin fa-stack-2x"></i>
+                            <i class="fa fa-info fa-stack-1x"></i>
+                        </span>
+                        {{ get_Translation('Users', 'userInfo') }}
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4><strong>{{ get_Translation('Users', 'username') }}: </strong>{{ user.login_name }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4><strong>{{ get_Translation('Users', 'names') }}
+                                        : </strong>{{ user.first_name ~ ' ' ~ user.last_name }}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4><strong>{{ get_Translation('Users', 'email') }}: </strong>{{ user.email }}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4><strong>{{ get_Translation('Users', 'phone') }}: </strong>{{ user.msisdn }}</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4><strong>{{ get_Translation('Users', 'userType') }}
+                                        : </strong>{{ user.rights_html | raw }}</h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>
+                                    <strong>{{ get_Translation('Users', 'password') }}: </strong>
+                                    {% if user.is_pass_expire == 1 %}
+                                        {{ user.pass_date_expire | date('Y-m-d') }} {# ->add(new DateInterval('P30D'))->format(INPUT_DATE_FORMAT); #}
+                                    {% else %}
+                                        <span class="glyphicon" style="font-size: 1.5em;">&infin;</span>
+                                    {% endif %}
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>
+                                    <strong>{{ get_Translation('Users', 'userStatus') }}: </strong>
+                                    {% if user.status == 1 %}
+                                        <span class="badge badge-pill badge-primary">{{ get_Translation('Users', 'userStatusActive') }}</span>
+                                    {% elseif user.status == 0 %}
+                                        <span class="badge badge-pill badge-light">{{ get_Translation('Users', 'userStatusNotActive') }}</span>
+                                    {% else %}
+                                        <span class="badge badge-pill badge-light">unknown</span>
+                                    {% endif %}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- PANEL -->
+
+                <div class="card card-outline-info">
+                    <div class="card-header text-white">
+                        <span class="fa fa-stack fa-lg" aria-hidden="true">
+                            <i class="fa fa-circle-thin fa-stack-2x"></i>
+                            <i class="fa fa-wrench fa-stack-1x"></i>
+                        </span>
+                        {{ get_Translation('Users', 'modules') }}
+                    </div>
+                    <div class="card-body">
+                        {% if user.modules is not empty %}
+                            <ul>
+                                {% for module in user.modules %}
+                                    <li>{{ module.names }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card card-outline-info">
+                    <div class="card-header text-white">
+                        <span class="fa fa-stack fa-lg" aria-hidden="true">
+                            <i class="fa fa-circle-thin fa-stack-2x"></i>
+                            <i class="fa fa-eye fa-stack-1x"></i>
+                        </span>
+                        {{ get_Translation('Users', 'remoteAddrTitle') }}
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for addr in user.remote_addr %}
+                                <li>{{ addr }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 col-xs-12 text-center">
+                <button id="password_reset" style="margin:5px" class="btn btn-primary">
+                    <span class="fa fa-lock" aria-hidden="true"></span>
+                    {{ get_Translation('Users', 'resetPassword') }}
+                </button>
+            </div>
+            <div class="col-md-4 col-xs-12 text-center">
+                <a href="{{ path_for('user.edit', {'id': user.id}) }}">
+                    <button style="margin:5px" class="btn btn-warning">
+                        <span class="fa fa-pencil text-danger" aria-hidden="true"></span>
+                        {{ get_Translation('System', 'edit') }}
+                    </button>
+                </a>
+            </div>
+            <div class="col-md-4 col-xs-12 text-center">
+                <button id="delete" style="margin:5px" class="btn btn-danger">
+                    <span class="fa fa-trash" aria-hidden="true"></span>
+                    {{ get_Translation('System', 'delete') }}
+                </button>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var script_delete = "{{ path_for('user.ajax.delete') }}";
+        var script_reset_password = "{{ path_for('user.ajax.resetPass') }}";
+        var userId = "{{ user.id }}";
+        var success = "{{ get_Translation('System', 'success') }}";
+        var successDel = "{{ get_Translation('System', 'successDel') }}";
+        var successResetPass = "{{ get_Translation('Users', 'sendEmailInstructions') }}";
+    </script>
+    <script type="text/javascript" src="{{ base_url() }}/js/user/user_page.js"></script>
+
+{% endblock %}

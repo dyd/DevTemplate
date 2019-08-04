@@ -1,0 +1,80 @@
+{% extends 'templates/app_guest.twig' %}
+
+{% block content %}
+
+    <div class="container" style="min-height: 100%;">
+        <div id="spinner" style="display: none;"></div>
+        <form name="login_form" action="{{ path_for('auth.signIn') }}" data-toggle="validator" method="post" role="form"
+              class="form-group"
+              style="max-width:400px;margin:0 auto;padding:90px 50px 20px; min-width:320px;">
+            <img style="margin:0px auto;padding-bottom:20px;" src="{{ base_url() }}/img/linkmobility_logo.png"
+                 class="img-responsive" alt="LINK Mobility" width="260" height="79">
+            <label for="inputUser" class="sr-only">{{ get_Translation('LogIn', 'username') }}</label>
+            <input name="username" data-errormessage-value-missing="{{ get_Translation['System']['fillThaField'] }}"
+                   type="text" id="inputUser"
+                   class="form-control" placeholder="{{ get_Translation('LogIn', 'username') }}" required autofocus="">
+            <label for="inputPassword" class="sr-only">{{ get_Translation('LogIn', 'password') }}</label>
+            <input name="password" style="margin-top:5px;margin-bottom:5px;" type="password" id="inputPassword"
+                   class="form-control" placeholder="{{ get_Translation('LogIn', 'password') }}" required>
+
+            <a href="#" id="ForgottenPass" data-toggle="modal"
+               data-target="#forgottenPassModal">{{ get_Translation('LogIn', 'forgotPassword') }}</a>
+
+            {% include 'templates/partial/flash.twig' %}
+
+            <button style="margin-top:10px;" class="btn btn-lg btn-primary btn-block"
+                    type="submit">{{ get_Translation('LogIn', 'signInBtn') }}</button>
+        </form>
+
+        {% include 'templates/partial/forgottenPassModal.twig' %}
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        (function (window, document, $, undefined) {
+            $('#forgottenForm').on('submit', function (e) {
+                e.preventDefault();
+                var button = $(this).find('#sbm_button');
+                button.button('loading');
+
+                var alert_block = '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">&times;</span></button><span>|*MSG*|</span></div>';
+
+                var frmData = new FormData($(this)[0]);
+                makeAjaxRequest(
+                        '{{ path_for('user.ajax.forgottenPass') }}',
+                        frmData,
+                        function (data) {
+
+                            if (data.st == 1) {
+                                $("#forgottenForm")[0].reset();
+                                $("#forgottenPassModal").modal('hide');
+                                swal("{{ get_Translation('System', 'success') }}", "{{ get_Translation('LogIn', 'checkEmail') }}", 'success');
+                            }
+
+                            if (data.st == 0) {
+                                if (data.username == 0) {
+                                    $("#username").popover('show');
+                                }
+                                if (data.email == 0) {
+                                    $("#email").popover('show');
+                                }
+                            }
+
+                            if (data.st == 5) {
+                                $('#forgottenPass_alert_block').find('.col').html(alert_block.replace('|*MSG*|', data.msg));
+                            }
+
+                        },
+                        function () {
+                            button.button('reset');
+                        }
+                );
+            });
+        })(window, document, window.jQuery, null);
+    </script>
+{% endblock %}

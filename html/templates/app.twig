@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>{{ get_Translation('Common', 'title') }}</title>
+    <meta name="author" content="DimitarNatskin@LINKMobility">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ base_url() }}/img/favicon.ico">
+    <!-- Bootstrap -->
+    <link href="{{ base_url() }}/vendor/elaAdmin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ base_url() }}/vendor/elaAdmin/css/helper.css" rel="stylesheet">
+    <link href="{{ base_url() }}/vendor/elaAdmin/css/style.css" rel="stylesheet">
+    <!-- Datepicker -->
+    <link href="{{ base_url() }}/vendor/datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+    <!-- Font awesome -->
+    <link href="{{ base_url() }}/vendor/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
+    <!-- Bootstrap select -->
+    <link rel="stylesheet" href="{{ base_url() }}/vendor/bootstrap-select/css/bootstrap-select.min.css">
+    <!-- DataTables -->
+    <link href="{{ base_url() }}/vendor/DataTablesBootstrap4/datatables.css" rel="stylesheet">
+    <link href="{{ base_url() }}/vendor/DataTablesBootstrap4/Responsive-2.2.1/css/responsive.bootstrap4.min.css"
+          rel="stylesheet">
+    <!-- Bootstrap switch -->
+    <link href="{{ base_url() }}/vendor/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet">
+    <!-- Sweetalert -->
+    <link href="{{ base_url() }}/vendor/swal/sweetalert.css" rel="stylesheet">
+    <!-- Custom css -->
+    <link href="{{ base_url() }}/css/main.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="{{ base_url() }}/vendor/html5shiv/html5shiv.min.js"></script>
+    <script type="text/javascript" src="{{ base_url() }}/vendor/respond/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar">
+<!-- Preloader - style you can find in spinners.css -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+    </svg>
+</div>
+<div id="spinner" style="display: none;"></div>
+
+{% include 'templates/partial/navigation.twig' %}
+
+{% include 'templates/partial/navigation_left.twig' %}
+
+<!-- Page wrapper  -->
+<div class="page-wrapper">
+
+    {% include 'templates/partial/modal.twig' %}
+
+    {% include 'templates/partial/page_head.twig' %}
+
+    {% block content %}{% endblock %}
+
+</div>
+
+<footer class="footer">
+    <div class="container-fluid text-center">
+
+        {{ get_Translation('Footer', 'footerText') }}
+
+    </div>
+</footer>
+
+<!-- Jquery -->
+<script src="{{ base_url() }}/vendor/jquery/jquery-3.3.1.min.js"></script>
+<!-- ElaAdmin -->
+<script src="{{ base_url() }}/vendor/elaAdmin/js/popper.min.js"></script>
+<script src="{{ base_url() }}/vendor/elaAdmin/js/bootstrap.min.js"></script>
+<script src="{{ base_url() }}/vendor/elaAdmin/js/jquery.slimscroll.js"></script>
+<script src="{{ base_url() }}/vendor/elaAdmin/js/sidebarmenu.js"></script>
+<script src="{{ base_url() }}/vendor/elaAdmin/js/sticky-kit.min.js"></script>
+<script src="{{ base_url() }}/vendor/elaAdmin/js/custom.min.js"></script>
+<!-- Civem -->
+<script src="{{ base_url() }}/vendor/civem/civem.js"></script>
+<!-- Datepicker -->
+<script src="{{ base_url() }}/vendor/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="{{ base_url() }}/vendor/datepicker/locales/bootstrap-datepicker.bg.min.js"></script>
+<script src="{{ base_url() }}/vendor/datepicker/locales/bootstrap-datepicker.en-GB.min.js"></script>
+<!-- Bootstrap select -->
+<script src="{{ base_url() }}/vendor/bootstrap-select/js/bootstrap-select.js"></script>
+<!-- DataTables -->
+<script src="{{ base_url() }}/vendor/DataTablesBootstrap4/datatables.js"
+        type="text/javascript"></script>
+<script src="{{ base_url() }}/vendor/DataTablesBootstrap4/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
+        type="text/javascript"></script>
+<script src="{{ base_url() }}/vendor/DataTablesBootstrap4/Responsive-2.2.1/js/responsive.bootstrap.min.js"
+        type="text/javascript"></script>
+<!-- Bootstrap switch -->
+<script src="{{ base_url() }}/vendor/bootstrap-switch/js/bootstrap-switch.min.js"
+        type="text/javascript"></script>
+<!-- Sweetalert -->
+<script src="{{ base_url() }}/vendor/swal/sweetalert.min.js" type="text/javascript"></script>
+<!-- Utils -->
+<script src="{{ base_url() }}/js/utils.js"></script>
+<!-- Custom js -->
+<script src="{{ base_url() }}/js/language_select.js" type="text/javascript"></script>
+<script>
+    var file_accept_template = "{{ get_Setting('fileTypes') | join(',') }}";
+    var base_url = "{{ base_url() }}";
+    var base_self = "{{ current_path() }}";
+</script>
+{% block javascript %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,12 @@
+.idea/
+/upload/*
+/vendor/*
+.env
+/translations/*
+!/translations/base.ini
+!/translations/bg.ini
+!/translations/en.ini
+/public/img/language_flags/*
+!/public/img/language_flags/bg.svg
+!/public/img/language_flags/en.svg
+cron/*.log

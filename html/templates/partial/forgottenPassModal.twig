@@ -1,0 +1,66 @@
+<!-- Modal -->
+<div id="forgottenPassModal" class="modal" role="dialog" data-backdrop="static" data-keyboar="false">
+    <div class="modal-dialog" role="document">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ get_Translation('LogIn', 'forgotPassword') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i
+                            class="fa fa-close"></i></button>
+
+            </div>
+            <form id="forgottenForm" action="#" method="POST">
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="username">{{ get_Translation('LogIn', 'username') }}</label>
+                                <input
+                                        data-errormessage-value-missing="{{ get_Translation('System', 'fillThatField') }}"
+                                        required type="text"
+                                        class="form-control" name="username" id="username"
+                                        data-toggle="popover" data-html="true" data-trigger="manual"
+                                        data-placement="bottom"
+                                        data-content='{{ get_Translation('System', 'allowedSymbols') }}: {{ get_Translation('System', 'allowedSymbolsChars') }}, {{ get_Translation('System', 'allowedSymbolsNumbers') }}<button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">{{ get_Translation('LogIn', 'email') }}</label>
+                                <input
+                                        data-errormessage-value-missing="{{ get_Translation('System', 'fillThatField') }}"
+                                        required type="email"
+                                        class="form-control" name="email" id="email"
+                                        data-toggle="popover" data-html="true" data-trigger="manual"
+                                        data-placement="bottom"
+                                        data-content='{{ get_Translation('System', 'validEmail') }}: link@linkmobility.com<button type="button" id="close" class="close" onclick="pophide(this)">&times;</button>'>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="forgottenPass_alert_block">
+                        <div class="col">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="sbm_button"
+                            data-loading-text="{{ get_Translation('System', 'pleaseWait') }}"><i
+                                class="fa fa-check-circle"></i> {{ get_Translation('LogIn', 'approve') }}
+                    </button>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal"><i
+                                class="fa fa-times-circle"></i> {{ get_Translation('System', 'close') }}</button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

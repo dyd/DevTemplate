@@ -1,0 +1,108 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <div class="row">
+            <div class="col-12">
+                <h4>{{ get_Translation('Translations', 'translationsEdit') }}</h4>
+
+                <div class="card">
+                    <form id="edit-language-form" method="post" action="{{ path_for('language.edit', {'id': lang.id}) }}">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>{{ get_Translation('Translations', 'translationsLanguage') }}</label>
+                                    <input disabled="disabled" name="languages" type="text" class="form-control"
+                                           title="{{ get_Translation('Translations', 'translationsLanguage') }}"
+                                           value="{{ lang.languages }}"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>{{ get_Translation('Translations', 'translationsCode') }}</label>
+                                    <input disabled="disabled" name="language_code" type="text" class="form-control"
+                                           title="{{ get_Translation('Translations', 'translationsCode') }}"
+                                           value="{{ lang.language_code }}"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>{{ get_Translation('Translations', 'translationsActiveNot') }}</label>
+                                    <input name="is_active" type="checkbox" class="form-control" title="Is active" {{ (lang.is_active == constant('LANGUAGE_ACTIVE_YES')) ? 'checked' }}>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label>{{ get_Translation('Translations', 'translationsFlag') }}</label>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="small">{{ get_Translation('Translations', 'translationsCurrentFlag') }}:</label>
+                                        <div class="clearfix"></div>
+                                        <img id="currentFlag" style="width:52px;height:39px" src="{{ base_url() }}/img/language_flags/{{ lang.language_flag }}"/>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <label class="small">{{ get_Translation('Translations', 'translationsChooseFlag') }}:</label>
+                                        <a tabindex="0" class="btn btn-sm" role="button" data-toggle="popover" data-trigger="hover"
+                                           data-placement="top" data-content="{{ get_Translation('Translations', 'translationsFlagInfo') }}">
+                                            <i class="fa fa-info-circle"></i>
+                                        </a>
+                                        <div class="input-group">
+                                            <label for="languageFlag" class="custom-file-label w-100" aria-describedby="file-input-span">
+                                                <input type="file" class="form-control custom-file-input" id="languageFlag" name="language_flag">
+                                                <span data-value="{{ get_Translation('System', 'chooseFile') }}" class="custom-file-control form-control-file">
+                                                    {{ get_Translation('System', 'chooseFile') }}
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                {% for section, data in lang.data %}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card card-block bg-faded">
+                                                <h4>{{ section }}</h4>
+                                                {% for key, value in data %}
+                                                    <div class="form-group">
+                                                        <label for="{{ 'data[' ~ section ~ '][' ~ key ~ ']' }}">{{ key }}</label>
+                                                        <input id="{{ 'data[' ~ section ~ '][' ~ key ~ ']' }}" name="{{ 'data[' ~ section ~ '][' ~ key ~ ']' }}" value="{{ value }}" class="form-control">
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="submit-button" type="submit" form="edit-language-form"
+                                        data-loading-text="{{ get_Translation('System', 'pleaseWait') }}"
+                                        class="btn btn-success">
+                                    <span class="fa fa-check-circle" aria-hidden="true"></span>
+                                    {{ get_Translation('System', 'edit') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var langId = "{{ lang.id }}";
+        var success = "{{ get_Translation('System', 'success') }}";
+        var successEdit = "{{ get_Translation('System', 'successEdit') }}";
+    </script>
+    <script type="text/javascript" src="{{ base_url() }}/js/language/language_edit.js"></script>
+{% endblock %}

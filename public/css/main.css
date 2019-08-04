@@ -1,0 +1,19 @@
+/*LOADING SPINNER*/
+#spinner {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../img/Gear-5s-150px.svg') 50% 50% no-repeat rgba(249, 249, 249, 0.5);
+}
+
+.footer {
+    left: 0;
+}
+
+.language-flag {
+    width: 23px;
+    height: 16px;
+}
